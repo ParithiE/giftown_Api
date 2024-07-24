@@ -1,5 +1,6 @@
-package com.giftown.ecommerce.configuration;
+package com.giftown.ecommerce.config;
 
+import org.modelmapper.ModelMapper;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,5 +14,10 @@ public class SpringDocConfig {
                 .group("public")
                 .pathsToMatch("/api/**")
                 .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

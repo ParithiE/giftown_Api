@@ -1,4 +1,4 @@
-package com.giftown.ecommerce.domain;
+package com.giftown.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
