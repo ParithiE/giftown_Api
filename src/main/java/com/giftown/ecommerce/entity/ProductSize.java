@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@Table(name = "product_size")
+@Table(name = "productsize")
 public class ProductSize {
 
     @Id
@@ -33,9 +33,6 @@ public class ProductSize {
 
     @Column(name = "additional_price")
     private double additionalPrice;
-
-    @Column(name = "quantity")
-    private int quantity;
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
