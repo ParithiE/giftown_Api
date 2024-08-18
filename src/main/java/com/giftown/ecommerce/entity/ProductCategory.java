@@ -22,9 +22,9 @@ public class ProductCategory {
 
     @Column(name= "category_name", nullable = false, unique = true)
     private String categoryname;
-//
-//    @OneToMany(mappedBy = "category")
-//    private List<Product> products;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)

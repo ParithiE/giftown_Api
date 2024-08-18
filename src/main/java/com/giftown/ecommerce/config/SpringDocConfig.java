@@ -20,4 +20,5 @@ public class SpringDocConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
 }
