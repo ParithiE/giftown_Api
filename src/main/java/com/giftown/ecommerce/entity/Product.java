@@ -35,6 +35,14 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
 
+    @ManyToOne
+    @JoinColumn(name = "sub_category_id", nullable = true)  // Adding reference to SubCategory
+    private ProductSubCategory subCategory;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ProductFields> fields;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @ToString.Exclude

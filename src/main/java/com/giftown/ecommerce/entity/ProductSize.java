@@ -28,6 +28,10 @@ public class ProductSize {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "sub_category_id", nullable = false)
+    private ProductSubCategory subCategory;
+
     @Column(name = "size")
     private String size;
 

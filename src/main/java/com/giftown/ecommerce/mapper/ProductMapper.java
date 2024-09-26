@@ -6,6 +6,7 @@ import com.giftown.ecommerce.dto.product.ProductSizeResponseModel;
 import com.giftown.ecommerce.entity.Product;
 import com.giftown.ecommerce.entity.ProductReview;
 import com.giftown.ecommerce.entity.ProductSize;
+import com.giftown.ecommerce.service.IProductService;
 import com.giftown.ecommerce.service.Implementation.ProductService;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class ProductMapper {
     private ModelMapper modelMapper;
 
     @Autowired
-    private  ProductService productService;
+    private IProductService productService;
 
     public ProductResponseModel getProductById(Long productId) {
         return this.convertToModel(productService.getProductById(productId));
