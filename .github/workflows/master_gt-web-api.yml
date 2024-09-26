@@ -42,6 +42,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
+          path: '${{ github.workspace }}/build/libs/*.war'
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
