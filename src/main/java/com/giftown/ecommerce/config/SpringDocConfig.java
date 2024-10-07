@@ -21,4 +21,6 @@ public class SpringDocConfig {
         return new ModelMapper();
     }
 
+    public static class WebConfig {
+    }
 }

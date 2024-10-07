@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "productcategory")
+//@Table(name = "product_category")
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_seq")
@@ -22,6 +22,9 @@ public class ProductCategory {
 
     @Column(name= "category_name", nullable = false, unique = true)
     private String categoryname;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;

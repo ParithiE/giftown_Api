@@ -40,4 +40,14 @@ public class CommonMapper {
         responseHeaders.add("page-total-elements", String.valueOf(totalElements));
         return new HeaderResponse<S>(orderResponses, responseHeaders);
     }
+
+//    <T, S> S convertToResponse(T data, Class<S> type) {
+//        return modelMapper.map(data, type);
+//    }
+//
+//    <T, S> List<S> convertToResponseList(List<T> lists, Class<S> type) {
+//        return lists.stream()
+//                .map(list -> convertToResponse(list, type))
+//                .collect(Collectors.toList());
+//    }
 }

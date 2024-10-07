@@ -1,43 +1,22 @@
 package com.giftown.ecommerce.dto.product;
 
+import lombok.ToString;
+
 import java.util.List;
 
+@ToString
 public class ProductResponseModel {
-//    private Long id;
-//    private String name;
-//    private String description;
-//    private Double price;
-//    private String category;
-
-
     public ProductResponseModel() {
     }
-
-//    public ProductResponseModel(Long id, String name, String description, Double price, String category) {
-//        this.id = id;
-//        this.name = name;
-//        this.description = description;
-//        this.price = price;
-//        this.category = category;
-//    }
-
     private Long id;
     private String productCode;
     private String name;
-    private String category;
-    private String brand;
-    private String description;
-    private double price;
-    private int quantity;
-    private String imageUrl;
-    private String sku;
-    private double weight;
-    private String color;
-    private String material;
-    private String manufacturer;
-    private boolean availability;
     private List<ProductReviewResponseModel> reviews;
     private List<ProductSizeResponseModel> sizes;
+    private ProductCategoryResponseModel category;
+    private ProductSubCategoryResponseModel subCategory;
+    private ProductMetaDataResponseModel productMetaData;
+
 
     // Getters and Setters
 
@@ -65,102 +44,28 @@ public class ProductResponseModel {
         this.name = name;
     }
 
-    public String getCategory() {
+    public ProductCategoryResponseModel getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategoryResponseModel category) {
         this.category = category;
     }
-
-    public String getBrand() {
-        return brand;
+    public ProductMetaDataResponseModel getProductMetaData() {
+        return productMetaData;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setProductMetaData(ProductMetaDataResponseModel productMetaData) {
+        this.productMetaData = productMetaData;
     }
 
-    public String getDescription() {
-        return description;
+    public ProductSubCategoryResponseModel getSubCategory() {
+        return subCategory;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubCategory(ProductSubCategoryResponseModel subCategory) {
+        this.subCategory = subCategory;
     }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public boolean isAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-
 
     public List<ProductReviewResponseModel> getReviews() {
         return reviews;
@@ -180,14 +85,14 @@ public class ProductResponseModel {
         System.out.println("Size" + sizes.toString());
         this.sizes = sizes;
     }
-    @Override
-    public String toString() {
-        return "ProductResponseModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "ProductResponseModel{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", description='" + description + '\'' +
+//                ", price=" + price +
+//                ", category='" + category + '\'' +
+//                '}';
+//    }
 }

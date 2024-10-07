@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "productsubcategory")
+//@Table(name = "product_sub_category")
 public class ProductSubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subcategory_id_seq")
@@ -23,6 +23,9 @@ public class ProductSubCategory {
 
     @Column(name= "subcategory_name", nullable = false, unique = true)
     private String subcategoryName;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

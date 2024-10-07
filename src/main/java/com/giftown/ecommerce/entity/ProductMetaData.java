@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "productmetadata")
+//@Table(name = "product_meta_data")
 public class ProductMetaData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "metadata_id_seq")
@@ -41,7 +41,7 @@ public class ProductMetaData {
     private String sku; // Stock Keeping Unit
 
     @Column(name = "weight")
-    private double weight; // Product weight
+    private Double weight; // Product weight
 
     @Column(name = "color")
     private String color;
@@ -55,8 +55,14 @@ public class ProductMetaData {
     @Column(name = "availability")
     private boolean availability; // Availability status
 
-    @Column(name = "description", length = 1000) // Adjust length as needed
+    @Column(name = "description", length = 10000) // Adjust length as needed
     private String description;
+
+    @Column(name = "add_information", length = 10000) // Adjust length as needed
+    private String addInformation;
+
+    @Column(name= "is_Trending")
+    private Boolean isTrending;
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)

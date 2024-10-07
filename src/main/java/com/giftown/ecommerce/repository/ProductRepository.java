@@ -1,7 +1,11 @@
 package com.giftown.ecommerce.repository;
 
 
+import com.giftown.ecommerce.entity.Order;
 import com.giftown.ecommerce.entity.Product;
+import com.giftown.ecommerce.entity.ProductSize;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +15,8 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    Page<Product> findAllByOrderByIdAsc(Pageable pageable);
 
     Product findAllById(Long productId);
     // Search by keywords in name, description, and category
@@ -47,5 +53,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("minPrice") double minPrice,
             @Param("maxPrice") double maxPrice
     );
+
 }
 

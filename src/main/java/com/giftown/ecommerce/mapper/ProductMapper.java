@@ -1,8 +1,11 @@
 package com.giftown.ecommerce.mapper;
 
+import com.giftown.ecommerce.dto.HeaderResponse;
+import com.giftown.ecommerce.dto.order.OrderResponseModel;
 import com.giftown.ecommerce.dto.product.ProductResponseModel;
 import com.giftown.ecommerce.dto.product.ProductReviewResponseModel;
 import com.giftown.ecommerce.dto.product.ProductSizeResponseModel;
+import com.giftown.ecommerce.entity.Order;
 import com.giftown.ecommerce.entity.Product;
 import com.giftown.ecommerce.entity.ProductReview;
 import com.giftown.ecommerce.entity.ProductSize;
@@ -12,6 +15,9 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,61 +31,67 @@ public class ProductMapper {
     private ModelMapper modelMapper;
 
     @Autowired
+    private CommonMapper commonMapper;
+
+    @Autowired
     private IProductService productService;
 
     public ProductResponseModel getProductById(Long productId) {
-        return this.convertToModel(productService.getProductById(productId));
+      //  return this.convertToModel(productService.getProductById(productId), ProductResponseModel.class);
+        return null;
     }
 
-    public List<ProductResponseModel> getAllProducts(List<Product> products) {
-        return products.stream()
-                .map(this::convertToModel)
-                .collect(Collectors.toList());
+    public HeaderResponse<ProductResponseModel> getAllProducts(Pageable pageable) {
+
+        Page<Product> products = productService.getAllProducts(pageable);
+        return commonMapper.getHeaderResponse(products.getContent(), products.getTotalPages(), products.getTotalElements(), ProductResponseModel.class);
+
     }
 
-    private ProductResponseModel convertToModel(Product product) {
-       if (product == null) {
-           throw new IllegalArgumentException("Product cannot be null");
-       }
-           modelMapper.typeMap(Product.class, ProductResponseModel.class).addMappings(mapper -> {
-               mapper.map(Product::getId, ProductResponseModel::setId);
-               mapper.map(Product::getProductCode, ProductResponseModel::setProductCode);
-               mapper.map(Product::getName, ProductResponseModel::setName);
-               mapper.map(src -> src.getCategory().getCategoryname(), ProductResponseModel::setCategory);
-               mapper.map(src -> src.getMetadata().getBrand(), ProductResponseModel::setBrand);
-               mapper.map(src -> src.getMetadata().getDescription(), ProductResponseModel::setDescription);
-               mapper.map(src -> src.getMetadata().getPrice(), ProductResponseModel::setPrice);
-               mapper.map(src -> src.getMetadata().getQuantity(), ProductResponseModel::setQuantity);
-               mapper.map(src -> src.getMetadata().getImageUrl(), ProductResponseModel::setImageUrl);
-               mapper.map(src -> src.getMetadata().getSku(), ProductResponseModel::setSku);
-               mapper.map(src -> src.getMetadata().getWeight(), ProductResponseModel::setWeight);
-               mapper.map(src -> src.getMetadata().getColor(), ProductResponseModel::setColor);
-               mapper.map(src -> src.getMetadata().getMaterial(), ProductResponseModel::setMaterial);
-               mapper.map(src -> src.getMetadata().getManufacturer(), ProductResponseModel::setManufacturer);
-               mapper.map(src -> src.getMetadata().isAvailability(), ProductResponseModel::setAvailability);
-               mapper.map(src -> src.getReviews(), ProductResponseModel::setReviews);
-               mapper.map(src -> src.getSizes(), ProductResponseModel::setSizes);
-//               mapper.using(reviewConverter).map(src -> src.getReviews(), ProductResponseModel::setReviews);
-//               mapper.using(sizeConverter).map(src -> src.getSizes(), ProductResponseModel::setSizes);
-           });
-           return modelMapper.map(product, ProductResponseModel.class);
+    public List<ProductSizeResponseModel> getAvailableSizes(Long productId, Long subCategoryId) {
+        return commonMapper.convertToResponseList(productService.getAvailableSizes(productId, subCategoryId), ProductSizeResponseModel.class);
     }
-
-//    private final Converter<List<ProductReview>, List<ProductReviewResponseModel>> reviewConverter = new Converter<List<ProductReview>, List<ProductReviewResponseModel>>() {
-//        @Override
-//    public List<ProductReviewResponseModel> convert(MappingContext<List<ProductReview>, List<ProductReviewResponseModel>> context) {
-//        return context.getSource() == null ? null : context.getSource().stream()
-//                .map(review -> new ProductReviewResponseModel(review.getId(), review.getAuthor(), review.getMessage(), review.getRating()))
-//                .collect(Collectors.toList());
-//    }
-//};
 //
-//private final Converter<List<ProductSize>, List<ProductSizeResponseModel>> sizeConverter = new Converter<List<ProductSize>, List<ProductSizeResponseModel>>() {
-//    @Override
-//    public List<ProductSizeResponseModel> convert(MappingContext<List<ProductSize>, List<ProductSizeResponseModel>> context) {
-//        return context.getSource() == null ? null : context.getSource().stream()
-//                .map(size -> new ProductSizeResponseModel(size.getId(), size.getSize(), size.getAdditionalPrice()))
-//                .collect(Collectors.toList());
+//     HeaderResponse<ProductResponseModel> getHeaderResponse(List<Product> products, Integer totalPages, Long totalElements, Class<ProductResponseModel> type) {
+//        List<ProductResponseModel> response = products.stream().map(product -> this.convertToModel(product, ProductResponseModel.class))
+//              .collect(Collectors.toList());
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.add("page-total-count", String.valueOf(totalPages));
+//        responseHeaders.add("page-total-elements", String.valueOf(totalElements));
+//        return new HeaderResponse<ProductResponseModel>(response, responseHeaders);
 //    }
-//};
+
+//    private <S, T> T convertToModel(S source, Class<T> targetClass) {
+//       if (source == null) {
+//           throw new IllegalArgumentException("Product cannot be null");
+//       }
+//        if (source instanceof Product && targetClass == ProductResponseModel.class) {
+//            modelMapper.typeMap(Product.class, ProductResponseModel.class).addMappings(mapper -> {
+//                mapper.map(Product::getId, ProductResponseModel::setId);
+//                mapper.map(Product::getProductCode, ProductResponseModel::setProductCode);
+//                mapper.map(Product::getName, ProductResponseModel::setName);
+////                mapper.map(src -> src.getCategory().getCategoryname(), ProductResponseModel::setCategory);
+////                mapper.map(src -> src.getCategory().getImageUrl(), ProductResponseModel::setCategoryImageUrl);
+////                mapper.map(src -> src.getCategory().getSubCategoryImageUrl(), ProductResponseModel::setSubCategoryImageUrl);
+//                mapper.map(src -> src.getMetadata().getBrand(), ProductResponseModel::setBrand);
+//                mapper.map(src -> src.getMetadata().getDescription(), ProductResponseModel::setDescription);
+//                mapper.map(src -> src.getMetadata().getAddInformation(), ProductResponseModel::setAddInformation);
+//                mapper.map(src -> src.getMetadata().getPrice(), ProductResponseModel::setPrice);
+//                mapper.map(src -> src.getMetadata().getQuantity(), ProductResponseModel::setQuantity);
+//                mapper.map(src -> src.getMetadata().getImageUrl(), ProductResponseModel::setImageUrl);
+//                mapper.map(src -> src.getMetadata().getSku(), ProductResponseModel::setSku);
+//                mapper.map(src -> src.getMetadata().getWeight(), ProductResponseModel::setWeight);
+//                mapper.map(src -> src.getMetadata().getColor(), ProductResponseModel::setColor);
+//                mapper.map(src -> src.getMetadata().getMaterial(), ProductResponseModel::setMaterial);
+//                mapper.map(src -> src.getMetadata().getManufacturer(), ProductResponseModel::setManufacturer);
+//                mapper.map(src -> src.getMetadata().isAvailability(), ProductResponseModel::setAvailability);
+//                mapper.map(src -> src.getMetadata().isTrending(), ProductResponseModel::setIsTrending);
+//                mapper.map(src -> src.getReviews(), ProductResponseModel::setReviews);
+//                mapper.map(src -> src.getSizes(), ProductResponseModel::setSizes);
+//                mapper.map(src -> src.getCategory(), ProductResponseModel::setCategory);
+//                mapper.map(src -> src.getSubCategory(), ProductResponseModel::setSubCategory);
+//            });
+//        }
+//           return modelMapper.map(source, targetClass);
+//    }
 }

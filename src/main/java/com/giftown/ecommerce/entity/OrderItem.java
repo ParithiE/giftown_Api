@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @ToString
-@Table(name = "order_item")
+//@Table(name = "order_item")
 public class OrderItem {
 
     @Id

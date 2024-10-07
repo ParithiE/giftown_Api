@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@Table(name = "productsize")
+//@Table(name = "product_size")
 public class ProductSize {
 
     @Id
@@ -25,15 +25,16 @@ public class ProductSize {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "sub_category_id", nullable = false)
+    @JoinColumn(name = "sub_category_id")
     private ProductSubCategory subCategory;
 
-    @Column(name = "size")
-    private String size;
+    @ManyToOne
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size size;
 
     @Column(name = "additional_price")
     private double additionalPrice;

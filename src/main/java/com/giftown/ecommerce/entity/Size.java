@@ -15,26 +15,18 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-//@Table(name = "product_review")
-public class ProductReview {
+//@Table(name = "size")
+public class Size {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "size_id_seq")
+    @SequenceGenerator(name = "size_id_seq", sequenceName = "size_id_seq", initialValue = 1, allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Column(name = "size")
+    private String size;
 
-    @Column(name = "author")
-    private String author;
-
-    @Column(name = "message")
-    private String message;
-
-    @Column(name = "rating")
-    private Integer rating;
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
@@ -48,16 +40,4 @@ public class ProductReview {
     @Column(name = "created_by", updatable = false)
     private String createdBy;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductReview review = (ProductReview) o;
-        return Objects.equals(id, review.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
